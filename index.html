@@ -45,8 +45,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form class="form-inline">
-                            <input type="text" class="form-control mr-10" placeholder="Search gifs" name="searchTerm" id="searchTerm">
-                            <input type="button" class="btn btn-dark" name="" id="" value="Search Gifs">
+                            <input type="text" name="searchGif" id="searchTerm" class="form-control" >
                         </form>
                     </div>
                 </div>
@@ -101,6 +100,7 @@
           name: "Keren",
           quotes: [],
           giphies: [],
+          search: "",
         },
         methods: {
           loadQuotes: function() {
@@ -114,36 +114,19 @@
                 console.log(err);
               });
           },
-          loadGiphies: function(){
+          loadGiphies: function(event){
               let self = this;
-              let res = $.get("https://api.giphy.com/v1/gifs/search?api_key=9My4aAyFTGMyhgo8BRjcBLJHOOqAp6yX&q=lion");
+              const searchedItem = document.querySelector("input[name=searchGif]").value;
+              console.log(searchedItem);
+              let res = $.get(`https://api.giphy.com/v1/gifs/search?api_key=9My4aAyFTGMyhgo8BRjcBLJHOOqAp6yX&q=lion`);
               
               res.done(function(data){
                   self.giphies = data.data;
-                  console.log(self.giphies);
               });
           },
-        //   loadGifs: function() {
-        //     let self = this;
-        //     self.$http
-        //       .get(`https://api.giphy.com/v1/gifs/search?api_key=9My4aAyFTGMyhgo8BRjcBLJHOOqAp6yX&q=lion&limit=25&offset=0&rating=G&lang=en`)
-        //       .then(response => {
-        //         self.giphies = response.data;
-        //         console.log(self.giphies);
-        //       })
-        //       .catch(err => {
-        //         console.log(err);
-        //       });
-        //   },
-        //   searchGiphy: function(){
-        //       let self = this;
-        //       let searchedGif = document.getElementById("searchTerm").value;
-        //       console.log(searchedGif);
-        //   },
           init: function() {
             let self = this;
             self.loadQuotes();
-            // self.loadGifs();
             self.loadGiphies();
           }
         },
